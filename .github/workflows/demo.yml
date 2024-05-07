@@ -29,12 +29,19 @@ jobs:
         uses: actions/upload-artifact@v4
         with: 
           name: dist-files
-          path: |
-            dist
-            package.json
+          path: dist
+          # path: |
+          #   dist
+          #   package.json
   deploy:
-    needs: build
+    needs: build                          # we must have this step to able download      
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy
-        run: echo "Deploying..."
+      - name: Get biuld artifacts
+        uses: actions/dowload-artifact@v4
+        with:
+          name: dist-files
+      - name: Output contents
+        run: ls                           # to see content
+      - name: Deploy                      # This is dummy deploy we using for exercise
+        run: echo "Deploying..."          # This is dummy too
